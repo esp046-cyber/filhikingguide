@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinoy Trail Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+            color: #2d3748;
+            padding: 1%;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0062cc 0%, #004085 100%);
+            color: white;
+            padding: 12px 1%;
+            border-radius: 8px;
+            margin-bottom: 1%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .subtitle {
+            font-size: 0.75em;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+        
+        .tab-nav {
+            display: flex;
+            gap: 1%;
+            margin-bottom: 1%;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px;
+            background: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tab-btn.active {
+            background: #0062cc;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .mountain-card {
+            background: white;
+            border-radius: 8px;
+            padding: 12px 1%;
+            margin-bottom: 1%;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            border-left: 4px solid #28a745;
+        }
+        
+        .mountain-name {
+            font-size: 1em;
+            font-weight: bold;
+            color: #0062cc;
+            margin-bottom: 6px;
+        }
+        
+        .mountain-location {
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .difficulty.easy { background: #d4edda; color: #155724; }
+        .difficulty.moderate { background: #fff3cd; color: #856404; }
+        .difficulty.hard { background: #f8d7da; color: #721c24; }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.8em;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 6px;
+            border-radius: 4px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .checklist-section {
+            background: white;
+            border-radius: 8px;
+            padding: 12px 1%;
+            margin-bottom: 1%;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+        
+        .checklist-title {
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #0062cc;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            margin-bottom: 6px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .tip-card {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 4px solid #ffc107;
+            padding: 12px 1%;
+            margin-bottom: 1%;
+            border-radius: 6px;
+            font-size: 0.85em;
+        }
+        
+        .tip-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 6px;
+        }
+        
+        .emergency-section {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-left: 4px solid #dc3545;
+            padding: 12px 1%;
+            border-radius: 6px;
+            margin-bottom: 1%;
+        }
+        
+        .emergency-title {
+            font-weight: bold;
+            color: #721c24;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+        
+        .emergency-number {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            font-size: 0.85em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .icon {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="icon">⛰️</span> Pinoy Trail Guide</h1>
+            <div class="subtitle">Your Filipino Hiking Companion</div>
+        </header>
+        
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="showTab('mountains')">Mountains</button>
+            <button class="tab-btn" onclick="showTab('gear')">Gear</button>
+            <button class="tab-btn" onclick="showTab('tips')">Tips</button>
+            <button class="tab-btn" onclick="showTab('emergency')">Emergency</button>
+        </div>
+        
+        <div id="mountains" class="tab-content active">
+            <div class="mountain-card">
+                <div class="mountain-name">Mt. Pulag</div>
+                <div class="mountain-location">📍 Benguet Province, Luzon</div>
+                <span class="difficulty moderate">Moderate</span>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Elevation</div>
+                        2,922 MASL
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        2-3 Days
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Trail</div>
+                        Ambangeg (Major)
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Best Season</div>
+                        Nov - April
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mountain-card">
+                <div class="mountain-name">Mt. Apo</div>
+                <div class="mountain-location">📍 Davao Region, Mindanao</div>
+                <span class="difficulty hard">Difficult</span>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Elevation</div>
+                        2,954 MASL
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        3-4 Days
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Trail</div>
+                        Kidapawan Route
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Best Season</div>
+                        March - May
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mountain-card">
+                <div class="mountain-name">Mt. Pinatubo</div>
+                <div class="mountain-location">📍 Zambales/Pampanga, Luzon</div>
+                <span class="difficulty easy">Easy</span>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Elevation</div>
+                        1,486 MASL
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        Day Hike
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Highlight</div>
+                        Crater Lake
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Best Season</div>
+                        Jan - May
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mountain-card">
+                <div class="mountain-name">Mt. Ugo</div>
+                <div class="mountain-location">📍 Benguet Province, Luzon</div>
+                <span class="difficulty moderate">Moderate</span>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Elevation</div>
+                        2,150 MASL
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        2 Days
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Trail</div>
+                        Kayapa Route
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Best Season</div>
+                        Nov - April
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="gear" class="tab-content">
+            <div class="checklist-section">
+                <div class="checklist-title">🎒 Backpack & Shelter</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="backpack">
+                    <label for="backpack">45-60L Backpack (with rain cover)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="tent">
+                    <label for="tent">Tent (if camping) - waterproof</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="sleeping">
+                    <label for="sleeping">Sleeping Bag (temp-rated)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="mat">
+                    <label for="mat">Sleeping Mat/Pad</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="tarp">
+                    <label for="tarp">Tarp or Ground Sheet</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="pillow">
+                    <label for="pillow">Inflatable Pillow (optional)</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">👟 Clothing & Footwear</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="boots">
+                    <label for="boots">Hiking Boots/Trail Shoes (broken in)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="sandals">
+                    <label for="sandals">Camp Sandals/Slippers</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="socks">
+                    <label for="socks">Hiking Socks (3+ pairs)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="jacket">
+                    <label for="jacket">Rain Jacket (waterproof)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="pants">
+                    <label for="pants">Rain Pants</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="layers">
+                    <label for="layers">Base Layers (moisture-wicking)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="insulation">
+                    <label for="insulation">Insulation Layer (fleece/down)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="shorts">
+                    <label for="shorts">Hiking Shorts/Pants</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="shirts">
+                    <label for="shirts">Quick-dry Shirts (2-3)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="hat">
+                    <label for="hat">Sun Hat/Cap</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="beanie">
+                    <label for="beanie">Warm Beanie (for cold mountains)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="gloves">
+                    <label for="gloves">Gloves (for summit attempts)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="underwear">
+                    <label for="underwear">Extra Underwear (3+ sets)</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🔦 Navigation & Light</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="headlamp">
+                    <label for="headlamp">Headlamp + Extra Batteries</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="flashlight">
+                    <label for="flashlight">Backup Flashlight</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="map">
+                    <label for="map">Physical Map</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="compass">
+                    <label for="compass">Compass</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="gps">
+                    <label for="gps">GPS Device/Phone with offline maps</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="whistle">
+                    <label for="whistle">Emergency Whistle</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">💧 Hydration & Nutrition</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="water">
+                    <label for="water">Water Bottles/Hydration Bladder (2-3L)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="purification">
+                    <label for="purification">Water Purification Tablets</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="filter">
+                    <label for="filter">Water Filter (optional)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="food">
+                    <label for="food">Trail Food & Snacks (extra day)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="meals">
+                    <label for="meals">Meals (breakfast, lunch, dinner)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="stove">
+                    <label for="stove">Camping Stove + Fuel</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="cookware">
+                    <label for="cookware">Pot/Pan & Utensils</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="lighter">
+                    <label for="lighter">Lighter/Matches (waterproof)</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🏥 Safety & First Aid</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="firstaid">
+                    <label for="firstaid">First Aid Kit (comprehensive)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="bandages">
+                    <label for="bandages">Bandages & Gauze</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="antiseptic">
+                    <label for="antiseptic">Antiseptic Wipes/Alcohol</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="painkillers">
+                    <label for="painkillers">Pain Relievers (Ibuprofen, etc.)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="blister">
+                    <label for="blister">Blister Treatment</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="tape">
+                    <label for="tape">Medical Tape & Scissors</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="emergency">
+                    <label for="emergency">Emergency Blanket</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="meds">
+                    <label for="meds">Personal Medications</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🔧 Tools & Repair</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="knife">
+                    <label for="knife">Multi-tool/Knife</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="duct">
+                    <label for="duct">Duct Tape (small roll)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="rope">
+                    <label for="rope">Paracord/Rope (10-15m)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="zip">
+                    <label for="zip">Zip Ties</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="repair">
+                    <label for="repair">Gear Repair Kit</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">☀️ Sun & Insect Protection</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="sunscreen">
+                    <label for="sunscreen">Sunscreen (SPF 50+)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="lip">
+                    <label for="lip">Lip Balm (with SPF)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="sunglasses">
+                    <label for="sunglasses">Sunglasses (UV protection)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="repellent">
+                    <label for="repellent">Insect Repellent (DEET/Citronella)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="antiitch">
+                    <label for="antiitch">Anti-itch Cream</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🧼 Hygiene & Sanitation</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="toilet">
+                    <label for="toilet">Toilet Paper + Trowel</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="sanitizer">
+                    <label for="sanitizer">Hand Sanitizer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="wipes">
+                    <label for="wipes">Wet Wipes/Baby Wipes</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="toothbrush">
+                    <label for="toothbrush">Toothbrush & Toothpaste</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="soap">
+                    <label for="soap">Biodegradable Soap</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="towel">
+                    <label for="towel">Quick-dry Towel</label>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">📱 Electronics & Misc</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="phone">
+                    <label for="phone">Mobile Phone (fully charged)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="powerbank">
+                    <label for="powerbank">Power Bank (20,000mAh+)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="cable">
+                    <label for="cable">Charging Cables</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="camera">
+                    <label for="camera">Camera (optional)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="bags">
+                    <label for="bags">Ziplock Bags (various sizes)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="trash">
+                    <label for="trash">Trash Bags (Leave No Trace)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="permits">
+                    <label for="permits">Permits & ID Documents</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="cash">
+                    <label for="cash">Cash (small bills)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="notebook">
+                    <label for="notebook">Notebook & Pen</label>
+                </div>
+            </div>
+        </div>
+        
+        <div id="tips" class="tab-content">
+            <div class="checklist-section">
+                <div class="checklist-title">📋 Pre-Hike Preparation</div>
+                <div class="tip-card">
+                    <div class="tip-title">🏔️ Research Your Mountain</div>
+                    Study the trail difficulty, elevation gain, and terrain type. Read recent trip reports and reviews. Check if permits or guides are required. Know the estimated hiking time and plan accordingly.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">📝 Register & Get Permits</div>
+                    Register with local authorities, DENR, or tourism office. Secure all necessary permits at least 1-2 weeks in advance. Hire accredited local guides (required for most major peaks). Respect indigenous communities and sacred sites.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🌦️ Check Weather Forecast</div>
+                    Monitor weather 7 days before your hike. Check PAGASA website for updates. Be prepared to postpone if conditions are unfavorable. Never hike during typhoon warnings or heavy rain forecasts.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">💪 Physical Conditioning</div>
+                    Train at least 4-6 weeks before major hikes. Do cardio exercises (jogging, stair climbing, cycling). Practice with a loaded backpack. Build leg strength with squats and lunges. Don't skip rest days.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">📱 Share Your Itinerary</div>
+                    Give detailed itinerary to family/friends. Include trailhead location, expected return date/time, and emergency contacts. Check in when you return safely. Consider leaving a copy with barangay officials.
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🥾 During The Hike</div>
+                <div class="tip-card">
+                    <div class="tip-title">🚶 Pace Yourself</div>
+                    Start slow and maintain a steady rhythm. Follow the "talk test" - you should be able to hold a conversation. Take short breaks every 45-60 minutes. Don't try to keep up with faster hikers if uncomfortable.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">💧 Hydration Strategy</div>
+                    Drink 150-200ml water every 20-30 minutes. Don't wait until you're thirsty. Bring electrolyte powder for long hikes. Purify water from streams using tablets or filters. Avoid drinking directly from unknown water sources.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🍫 Eat Regularly</div>
+                    Snack every 1-2 hours to maintain energy. Bring high-calorie foods (nuts, energy bars, dried fruits). Eat a proper meal during longer breaks. Don't skip breakfast before starting. Pack extra food for emergencies.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🌡️ Layer Your Clothing</div>
+                    Start with fewer layers and add as needed. Remove layers before you start sweating. Base layer should be moisture-wicking, not cotton. Keep rain gear accessible. Bring extra warm clothes for summit attempts.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">👣 Proper Foot Care</div>
+                    Wear broken-in boots (never new shoes). Use proper hiking socks (avoid cotton). Tape hot spots immediately to prevent blisters. Keep feet dry when possible. Bring extra socks to change into.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🎒 Pack Weight Distribution</div>
+                    Heavy items should be close to your back and centered. Keep frequently-used items easily accessible. Pack should not exceed 20% of body weight. Adjust straps regularly for comfort. Use hip belt to transfer weight from shoulders.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🗺️ Navigation Tips</div>
+                    Stay on marked trails at all times. Use trail markers and cairns as guides. Check your map and compass regularly. Download offline maps before the hike. Mark your campsite location on GPS.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">👥 Group Dynamics</div>
+                    Never hike alone - minimum 3 people recommended. Stay together and set a comfortable pace for all. Assign a sweep (last person) to ensure no one is left behind. Do regular headcounts. Help slower members with their packs if needed.
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🏕️ Camping & Campsite</div>
+                <div class="tip-card">
+                    <div class="tip-title">⛺ Choose Campsite Wisely</div>
+                    Camp only in designated areas if available. Look for level, dry ground away from water sources (at least 60m). Avoid camping under dead trees or on ridges. Check for ant hills and wasp nests. Set up before dark.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🔥 Campfire Safety</div>
+                    Check if campfires are allowed (many mountains ban them). Use existing fire rings when available. Keep fires small and controlled. Never leave fire unattended. Completely extinguish before sleeping or leaving. Use camping stove as safer alternative.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🐻 Food Storage</div>
+                    Store food in sealed containers away from tent. Hang food bags on trees if animals are present. Never eat inside your tent. Clean up all food scraps immediately. Don't leave food or scented items in your tent overnight.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🌙 Night Hiking Safety</div>
+                    Use headlamp with red light mode to preserve night vision. Always hike with at least one partner at night. Watch your footing carefully on uneven terrain. Bring backup lights and extra batteries. Avoid night hikes on unfamiliar trails.
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🌿 Environmental Responsibility</div>
+                <div class="tip-card">
+                    <div class="tip-title">♻️ Leave No Trace Principles</div>
+                    Pack out ALL trash including biodegradable waste. Toilet paper and sanitary items must be packed out. Don't bury trash - animals will dig it up. Leave what you find - no souvenirs. Take only photos, leave only footprints.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🚽 Proper Waste Disposal</div>
+                    Dig catholes 15-20cm deep for human waste. Use toilet at least 60m from water sources. Pack out toilet paper in ziplock bags. Cover and disguise catholes after use. Use biodegradable soap sparingly.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🌸 Respect Flora & Fauna</div>
+                    Don't pick flowers or collect plants. Stay on designated trails to avoid erosion. Don't feed or approach wildlife. Keep noise levels down. Observe animals from a distance. Respect bird nesting areas.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🏞️ Cultural Sensitivity</div>
+                    Respect sacred sites and indigenous customs. Ask permission before taking photos of locals. Follow guide's instructions about cultural practices. Don't enter restricted areas. Learn basic local greetings. Support local communities by hiring local guides.
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">⚠️ Safety & Emergency</div>
+                <div class="tip-card">
+                    <div class="tip-title">🌩️ Weather Changes</div>
+                    Philippine mountain weather changes quickly. Watch for dark clouds and sudden wind changes. Seek shelter immediately if lightning threatens. Don't continue to summit if weather worsens. It's always okay to turn back for safety.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🤕 Common Injuries Prevention</div>
+                    Prevent blisters with proper socks and boots. Treat hot spots immediately with tape or moleskin. Use trekking poles to reduce knee strain. Watch for slippery rocks and roots. Take care on descents (most injuries happen going down).
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🥵 Heat-Related Issues</div>
+                    Start early to avoid midday heat. Wear light-colored, breathable clothing. Use sun protection (hat, sunscreen, sunglasses). Watch for heat exhaustion symptoms (dizziness, nausea, excessive sweating). Rest in shade if overheated.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🥶 Cold & Altitude</div>
+                    Hypothermia can occur even in PH mountains above 2000m. Keep dry and wear proper layers. Watch for altitude sickness symptoms (headache, nausea, fatigue). Ascend slowly to acclimatize. Descend if symptoms worsen.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🐍 Wildlife Encounters</div>
+                    Watch where you step and place your hands. Wear long pants in tall grass. Make noise while hiking to avoid surprises. Don't provoke or corner animals. Know basic first aid for snake bites. Most Philippine snakes avoid humans.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">📞 Emergency Signals</div>
+                    Three of anything means distress (whistles, shouts, light flashes). Stay put if lost - make yourself visible. Use mirror or phone screen to signal aircraft. Create SOS sign with rocks or bright clothing. Conserve phone battery for emergencies.
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">📸 Photography Tips</div>
+                <div class="tip-card">
+                    <div class="tip-title">📷 Capture The Moment</div>
+                    Golden hour (sunrise/sunset) provides best lighting. Bring extra batteries and memory cards. Protect camera from moisture with dry bags. Use burst mode for action shots. Don't sacrifice safety for photos. Respect "no photography" areas.
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🇵🇭 Filipino Hiking Etiquette</div>
+                <div class="tip-card">
+                    <div class="tip-title">🤝 Trail Courtesy</div>
+                    Greet fellow hikers with "Good morning/afternoon". Uphill hikers have right of way. Step aside to let faster hikers pass. Offer help if you see someone struggling. Share trail information about conditions ahead. Be friendly and respectful to everyone.
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🎵 Noise Levels</div>
+                    Keep voices down to preserve nature's tranquility. Don't play loud music on trails. Respect others seeking peace in nature. Keep celebrations at campsites considerate. Be especially quiet during early morning hours.
+                </div>
+            </div>
+        </div>
+        
+        <div id="emergency" class="tab-content">
+            <div class="emergency-section">
+                <div class="emergency-title">🚨 Emergency Contacts Philippines</div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>Unified Emergency Hotline</strong><br>
+                        Police, Fire, Medical
+                    </div>
+                    <strong>911</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>NDRRMC Hotline</strong><br>
+                        National Disaster Response
+                    </div>
+                    <strong>(02) 8911-1406</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>Philippine Red Cross</strong><br>
+                        Emergency & Rescue Services
+                    </div>
+                    <strong>143</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>DENR Hotline</strong><br>
+                        Environmental Concerns
+                    </div>
+                    <strong>(02) 8929-6626</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>PCG Action Center</strong><br>
+                        Philippine Coast Guard
+                    </div>
+                    <strong>(02) 8527-8481</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>PAGASA Weather</strong><br>
+                        Weather Updates & Warnings
+                    </div>
+                    <strong>(02) 8927-1335</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>DOH Health Line</strong><br>
+                        Department of Health
+                    </div>
+                    <strong>1555</strong>
+                </div>
+                
+                <div class="emergency-number">
+                    <div>
+                        <strong>BFP Fire Emergency</strong><br>
+                        Bureau of Fire Protection
+                    </div>
+                    <strong>(02) 8426-0219</strong>
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🆘 Emergency Procedures</div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">⚠️ General Emergency Response</div>
+                    1. STOP and assess the situation calmly<br>
+                    2. Ensure scene safety for yourself and others<br>
+                    3. Check for injuries - attend to most serious first<br>
+                    4. Call for help immediately (911 or local emergency)<br>
+                    5. Provide first aid if trained to do so<br>
+                    6. Keep the person warm and comfortable<br>
+                    7. Do NOT move someone with suspected spine injury<br>
+                    8. Document what happened and time of incident
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">📍 If Someone Gets Lost</div>
+                    1. Note last known location and time<br>
+                    2. Establish last seen wearing/carrying what<br>
+                    3. Call emergency services immediately<br>
+                    4. Stay in group - send 2 people max to search<br>
+                    5. Use whistles (3 blasts = distress signal)<br>
+                    6. Mark trails to avoid getting more people lost<br>
+                    7. If you're lost: STOP, stay put, signal for help<br>
+                    8. Make yourself visible with bright colors
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🤕 Injury Response Steps</div>
+                    1. Check for consciousness (talk to them)<br>
+                    2. Check breathing and pulse<br>
+                    3. Control bleeding with direct pressure<br>
+                    4. Immobilize suspected fractures<br>
+                    5. Treat for shock (lay flat, elevate legs, keep warm)<br>
+                    6. Never give unconscious person food/water<br>
+                    7. Monitor vital signs continuously<br>
+                    8. Prepare for evacuation if necessary
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🏥 First Aid Quick Guide</div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🩹 Cuts & Wounds</div>
+                    - Rinse with clean water to remove debris<br>
+                    - Apply direct pressure to stop bleeding<br>
+                    - Clean with antiseptic wipes<br>
+                    - Apply antibiotic ointment if available<br>
+                    - Cover with sterile bandage<br>
+                    - Watch for signs of infection (redness, swelling, pus)<br>
+                    - Change dressing daily or when wet
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">👣 Blisters Treatment</div>
+                    - Do NOT pop unless absolutely necessary<br>
+                    - Clean area with alcohol or antiseptic<br>
+                    - If must drain: sterilize needle, drain from side<br>
+                    - Apply antibiotic ointment<br>
+                    - Cover with moleskin or blister bandage<br>
+                    - Prevention: tape hot spots immediately<br>
+                    - Keep feet dry and change socks regularly
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🦴 Sprains & Fractures</div>
+                    <strong>Sprains (RICE method):</strong><br>
+                    - Rest the injured area<br>
+                    - Ice for 20 mins every 2 hours<br>
+                    - Compress with elastic bandage<br>
+                    - Elevate above heart level<br><br>
+                    <strong>Fractures:</strong><br>
+                    - Don't move injured area<br>
+                    - Immobilize with splint<br>
+                    - Apply ice to reduce swelling<br>
+                    - Seek immediate medical help
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🐍 Snake Bite Response</div>
+                    - Stay calm and still (slows venom spread)<br>
+                    - Remove jewelry/tight clothing near bite<br>
+                    - Keep bitten area below heart level<br>
+                    - Do NOT cut wound or try to suck venom<br>
+                    - Do NOT apply ice or tourniquet<br>
+                    - Try to identify snake (from safe distance)<br>
+                    - Get to hospital immediately<br>
+                    - Most Philippine snakes are non-venomous
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🐝 Insect Stings</div>
+                    - Remove stinger by scraping (don't pinch)<br>
+                    - Wash area with soap and water<br>
+                    - Apply cold compress to reduce swelling<br>
+                    - Take antihistamine if available<br>
+                    - Watch for allergic reaction signs<br>
+                    - Seek help if difficulty breathing occurs<br>
+                    - Multiple stings require medical attention
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🥵 Heat Exhaustion</div>
+                    <strong>Symptoms:</strong> Heavy sweating, weakness, dizziness, nausea, headache<br><br>
+                    <strong>Treatment:</strong><br>
+                    - Move to shade immediately<br>
+                    - Remove excess clothing<br>
+                    - Drink water slowly<br>
+                    - Apply cool wet cloths<br>
+                    - Rest completely<br>
+                    - If symptoms worsen → Heat Stroke (call 911)
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🥶 Hypothermia</div>
+                    <strong>Symptoms:</strong> Shivering, confusion, slurred speech, drowsiness<br><br>
+                    <strong>Treatment:</strong><br>
+                    - Get to shelter immediately<br>
+                    - Remove wet clothing<br>
+                    - Wrap in blankets/sleeping bag<br>
+                    - Give warm (not hot) drinks<br>
+                    - Apply heat packs to core areas<br>
+                    - Seek medical help if severe<br>
+                    - Prevention: Stay dry and layered
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">⛰️ Altitude Sickness (AMS)</div>
+                    <strong>Symptoms:</strong> Headache, nausea, fatigue, dizziness, difficulty sleeping<br><br>
+                    <strong>Treatment:</strong><br>
+                    - Stop ascending immediately<br>
+                    - Rest and hydrate<br>
+                    - Take pain reliever for headache<br>
+                    - If symptoms persist: DESCEND<br>
+                    - Do not continue up if feeling worse<br>
+                    - Severe AMS requires immediate descent<br>
+                    - Prevention: Ascend slowly, stay hydrated
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">💦 Dehydration</div>
+                    <strong>Symptoms:</strong> Thirst, dark urine, fatigue, dizziness, dry mouth<br><br>
+                    <strong>Treatment:</strong><br>
+                    - Drink water slowly and consistently<br>
+                    - Add electrolyte powder if available<br>
+                    - Rest in shade<br>
+                    - Avoid further exertion<br>
+                    - Eat salty snacks<br>
+                    - Prevention: Drink before you're thirsty
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🌩️ Weather Emergencies</div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">⚡ Lightning Safety</div>
+                    <strong>If caught in storm:</strong><br>
+                    - Seek low ground (not summit/ridge)<br>
+                    - Avoid tall trees and metal objects<br>
+                    - Get away from water<br>
+                    - Crouch low with feet together<br>
+                    - Don't lie flat on ground<br>
+                    - Wait 30 mins after last thunder before moving<br>
+                    - If someone is struck: start CPR if needed
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🌧️ Flash Flood Response</div>
+                    - Never camp in dry riverbeds<br>
+                    - Move to higher ground immediately<br>
+                    - Don't attempt to cross flowing water<br>
+                    - If swept away: keep feet downstream, float on back<br>
+                    - Grab onto stable objects if possible<br>
+                    - 6 inches of moving water can knock you down
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">📱 Communication During Emergency</div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">📞 What to Report</div>
+                    When calling emergency services, provide:<br>
+                    1. Your exact location (GPS coordinates if possible)<br>
+                    2. Number of people in your group<br>
+                    3. Nature and severity of emergency<br>
+                    4. Current condition of injured person<br>
+                    5. Your contact number<br>
+                    6. Landmarks or trail name<br>
+                    7. Weather conditions<br>
+                    8. Available resources (first aid, shelter)
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">🔦 Emergency Signals</div>
+                    <strong>Universal Distress Signals:</strong><br>
+                    - Three whistles, shouts, or light flashes<br>
+                    - Repeat pattern every minute<br>
+                    - SOS in Morse Code: ••• --- •••<br>
+                    - Large SOS sign with rocks/branches<br>
+                    - Bright colored clothing laid out<br>
+                    - Smoke signals (3 puffs)<br>
+                    - Wave both arms overhead in Y shape
+                </div>
+            </div>
+
+            <div class="checklist-section">
+                <div class="checklist-title">🎒 Emergency Kit Essentials</div>
+                
+                <div class="tip-card">
+                    <div class="tip-title">📦 Always Carry These</div>
+                    ✓ First aid kit with manual<br>
+                    ✓ Emergency blanket (space blanket)<br>
+                    ✓ Whistle (3 blasts = help needed)<br>
+                    ✓ Headlamp with extra batteries<br>
+                    ✓ Backup lighter/waterproof matches<br>
+                    ✓ Multi-tool or knife<br>
+                    ✓ Paracord (at least 10 meters)<br>
+                    ✓ Duct tape (wrapped around water bottle)<br>
+                    ✓ Emergency contact list (laminated)<br>
+                    ✓ Cash for emergency expenses<br>
+                    ✓ Pain relievers and personal medications<br>
+                    ✓ Water purification tablets
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-title">📝 Emergency Action Plan</div>
+                Before every hike, establish an Emergency Action Plan (EAP):<br>
+                - Designate a group leader and decision maker<br>
+                - Know location of nearest hospital/clinic<br>
+                - Have emergency contact numbers saved offline<br>
+                - Establish communication protocol<br>
+                - Set check-in times with emergency contact<br>
+                - Know evacuation routes from campsite<br>
+                - Brief all members on emergency procedures<br>
+                - Carry written copy of EAP
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-title">🏥 Nearest Hospitals by Region</div>
+                Before hiking, research nearest medical facilities to your mountain. Save their contact numbers. Know approximate distance and travel time. Have evacuation plan ready. Consider travel time from trailhead to hospital.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const btns = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            btns.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
